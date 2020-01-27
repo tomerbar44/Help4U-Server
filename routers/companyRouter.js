@@ -6,6 +6,7 @@ router.get('/getCompanies', (req, res) => {
     controller.getCompanies(req, res);
 });
 
+// default route
 router.all('*', (req, res) => {
     res.status(404).json({
         status:404,

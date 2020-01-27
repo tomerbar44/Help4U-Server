@@ -6,6 +6,7 @@ router.get('/getSubjects', (req, res) => {
     controller.getSubjects(req, res);
 });
 
+// default route
 router.all('*', (req, res) => {
     res.status(404).json({
         status:404,

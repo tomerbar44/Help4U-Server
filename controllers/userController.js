@@ -1,6 +1,6 @@
 const model = require('../dal/userSchema');
 
-// check if user exists in our system by google id_token, if yes send in the data the authorization of the user
+// check if user exists in our system by google id_token, if yes send in the data the authorization (admin or client) of the user
 async function checkUser(req, res) {
     try {
         const data = await model.findUser(req.body.id_token);
@@ -29,7 +29,7 @@ async function checkUser(req, res) {
     }
 
 }
-
+// create new client user
 async function createClientUser(req, res) {
     try {
         const data = await model.createNewClientUser(req.body);

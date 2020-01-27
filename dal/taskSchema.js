@@ -83,7 +83,6 @@ taskSchema.statics.updateStatus = async function (taskID) {
 
 // update chat array by task ID , updated chat sent to request body
 taskSchema.statics.updateChat = async function (req) {
-    console.log('req.taskID\n\n',req.taskID);
     return await this.findOneAndUpdate({ taskID: req.taskID }, { $set: { chat: req.body.chat } }, { new: true });
 }
 
