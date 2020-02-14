@@ -7,7 +7,7 @@ const userSchema = new Schema({
 
 // read user by id_token that send in the body request and create by google sign in
 userSchema.statics.findUser = function (id_token) {
-    return this.find({ id_token: id_token }, function (err) {
+    return this.findOne({ id_token: id_token }, function (err) {
         if (err) {
             throw err;
         }
