@@ -2,12 +2,14 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 const path = require('path');
+const cors=require('cors');
 
 const taskApi = require('./routers/taskRouter');
 const subjectApi = require('./routers/subjectRouter');
 const companyApi = require('./routers/companyRouter');
 const userApi = require('./routers/userRouter');
 
+app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
