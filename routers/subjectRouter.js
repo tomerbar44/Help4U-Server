@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/subjectController');
 
-router.get('/getSubjects', (req, res) => {
+router.get('/', (req, res) => {
     controller.getSubjects(req, res);
 });
 

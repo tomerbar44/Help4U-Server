@@ -1,9 +1,9 @@
-const model = require('../dal/taskSchema');
+const model = require('../models/taskSchema');
 
 
 async function getTasksUser(req, res) {
     try {
-        const data = await model.findTasksUser(req.userID);
+        const data = await model.findTasksUser(req.params.userID);
         if (data.length == 0) {
             res.status(200).json({
                 status:200,
@@ -31,7 +31,7 @@ async function getTasksUser(req, res) {
 
 async function getTasksCompany(req, res) {
     try {
-        const data = await model.findTasksCompany(req.companyID);
+        const data = await model.findTasksCompany(req.params.companyID);
         if (data.length == 0) {
             res.status(200).json({
                 status:200,
@@ -81,7 +81,7 @@ async function createNewTask(req, res) {
 
 async function updateStatusTask(req, res) {
     try {
-        const data = await model.updateStatus(req.taskID);
+        const data = await model.updateStatus(req.params.taskID);
         if (data == null) {
             res.status(200).json({
                 status:200,
@@ -138,7 +138,7 @@ async function updateChatTask(req, res) {
 
 async function deleteTask(req, res) {
     try {
-        const data = await model.deleteTaskFromDb(req.taskID);
+        const data = await model.deleteTaskFromDb(req.params.taskID);
         if (data == null) {
             res.status(200).json({
                 status:200,

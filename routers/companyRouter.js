@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/companyController');
 
-router.get('/getCompanies', (req, res) => {
+router.get('/', (req, res) => {
     controller.getCompanies(req, res);
 });
 

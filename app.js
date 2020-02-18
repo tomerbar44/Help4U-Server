@@ -24,8 +24,17 @@ app.use(
 
 // routes for all api services
 app.use('/Help4U/task', taskApi);
-app.use('/Help4U/subject', subjectApi);
-app.use('/Help4U/company', companyApi);
+app.use('/Help4U/subjects', subjectApi);
+app.use('/Help4U/companies', companyApi);
 app.use('/Help4U/user', userApi);
+app.get('*', (req, res) => {
+  res.status(404).json({
+      status:404,
+      message: "Wrong route",
+      action: "Unknown",
+      data: null
+  })
+});
+
 
 module.exports = app;
