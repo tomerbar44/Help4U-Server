@@ -81,7 +81,7 @@ async function createNewTask(req, res) {
 
 async function updateStatusTask(req, res) {
     try {
-        const data = await model.updateStatus(req.params.taskID);
+        const data = await model.updateStatus(req.params.taskID,req.body.userID);
         if (data == null) {
             res.status(200).json({
                 status:200,
@@ -89,7 +89,14 @@ async function updateStatusTask(req, res) {
                 action: "Update",
                 data: null
             });
-        } else {
+        }else if (data == -1) {
+            res.status(200).json({
+                status:200,
+                message: "The user does not have permission to update status",
+                action: "Delete",
+                data: null
+            });
+        }else {
             res.status(200).json({
                 status:200,
                 message: "success",
@@ -118,7 +125,7 @@ async function updateChatTask(req, res) {
                 action: "Update",
                 data: null
             });
-        } else {
+        }else {
             res.status(200).json({
                 status:200,
                 message: "success",
@@ -138,11 +145,19 @@ async function updateChatTask(req, res) {
 
 async function deleteTask(req, res) {
     try {
-        const data = await model.deleteTaskFromDb(req.params.taskID);
+    
+        const data = await model.deleteTaskFromDb(req.params.taskID,req.body.userID);
         if (data == null) {
             res.status(200).json({
                 status:200,
                 message: "No task / task with status active was found for this task ID",
+                action: "Delete",
+                data: null
+            });
+        }else if (data == -1) {
+            res.status(200).json({
+                status:200,
+                message: "The user does not have permission to delete",
                 action: "Delete",
                 data: null
             });

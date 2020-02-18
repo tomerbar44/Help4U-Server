@@ -5,6 +5,8 @@ const messageSchema = new Schema({
     message: { type: String, required: true }
 });
 
+const userModel = require('./userSchema');
+
 const taskSchema = new Schema({
     taskID: {
         type: Number,
@@ -14,6 +16,10 @@ const taskSchema = new Schema({
     },
     userID: {
         type: Number,
+        required: true
+    },
+    userName: {
+        type: String,
         required: true
     },
     companyID: {
@@ -50,6 +56,7 @@ const taskSchema = new Schema({
 taskSchema.statics.insertNewTask = async function (body) {
     let taskObj = new this({
         userID: body.userID,
+        userName:body.userName,
         companyID: body.companyID,
         title: body.title,
         selectedSubject: body.selectedSubject,
@@ -77,7 +84,12 @@ taskSchema.statics.findTasksCompany = function (companyID) {
 }
 
 // update status by task ID , only if status=Active, change status to Completed and create complete date by date now
-taskSchema.statics.updateStatus = async function (taskID) {
+taskSchema.statics.updateStatus = async function (taskID,userID) {
+    try{
+        const data = await userModel.findUser(userID);
+        if(data==null || data.isAdmin == false) return -1;
+    }
+    catch (err) { throw err;}
     return await this.findOneAndUpdate({ taskID: taskID, status: "Active" }, { $set: { status: "Completed", datecomplete: Date.now() } }, { new: true });
 }
 
@@ -87,7 +99,12 @@ taskSchema.statics.updateChat = async function (req) {
 }
 
 // delete task by task ID , only if status=Completed
-taskSchema.statics.deleteTaskFromDb = async function (taskID) {
+taskSchema.statics.deleteTaskFromDb = async function (taskID,userID) {
+    try{
+        const data = await userModel.findUser(userID);
+        if(data==null || data.isAdmin == false) return -1;
+    }
+    catch (err) { throw err;}
     return await this.findOneAndDelete({ taskID: taskID, status: "Completed" });
 }
 

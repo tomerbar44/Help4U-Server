@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/userController');
 
-router.post('/checkUser', (req, res) => {
+router.post('/check', (req, res) => {
     controller.checkUser(req, res);
 });
 
-router.post('/createNewUser', (req, res) => {
+router.post('/create', (req, res) => {
     controller.createClientUser(req, res);
 });
 
