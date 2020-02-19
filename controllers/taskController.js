@@ -61,7 +61,9 @@ async function getTasksCompany(req, res) {
 
 async function createNewTask(req, res) {
     try {
+        
         const data = await model.insertNewTask(req.body);
+        console.log("task",data);
         res.status(200).json({
             status:200,
             message: "success",

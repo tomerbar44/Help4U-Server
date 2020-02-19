@@ -6,13 +6,13 @@ const messageSchema = new Schema({
 });
 
 const userModel = require('./userSchema');
+const nlpModel = require('../nlp');
 
 const taskSchema = new Schema({
     taskID: {
         type: Number,
         index: true,
-        unique: true,
-        default:Date.now()
+        unique: true
     },
     userID: {
         type: Number,
@@ -31,8 +31,7 @@ const taskSchema = new Schema({
         required: true
     },
     datesend: {
-        type: Date,
-        default:Date.now()
+        type: Date
     },
     datecomplete: {
         type: Date
@@ -54,14 +53,19 @@ const taskSchema = new Schema({
 
 // create task by sending parameters in the body request, status && date send && taskID create by the server
 taskSchema.statics.insertNewTask = async function (body) {
+    console.log("im here",body);
     let taskObj = new this({
+        taskID:Date.now(),
         userID: body.userID,
         userName:body.userName,
         companyID: body.companyID,
+        datesend:Date.now(),
         title: body.title,
         selectedSubject: body.selectedSubject,
         chat: body.chat
     });
+    console.log(body.chat[0].message);
+    nlpModel(body.chat[0].message);
     return await taskObj.save();
 }
 
