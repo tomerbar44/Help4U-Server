@@ -8,10 +8,8 @@ classifier.addDocument('my wifi is not work again', 'WIFI problems');
 classifier.addDocument('not work ', 'problems');
 classifier.train();
 
-function findMeaning(first_message){
-    console.log("in function",first_message)
-     console.log("nlp",classifier.classify(first_message));
-     return classifier.classify(first_message);
+function findMeaning(title){
+     return classifier.classify(title);
 }
 
 function trainAlgo(text,subject){
