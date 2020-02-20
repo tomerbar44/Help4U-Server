@@ -51,13 +51,13 @@ async function createClientUser(req, res) {
 }
 async function updateToken(req, res) {
     try {
-        const data = await model.updateToken(req.body.google_id,req.body.acsses_token);
+        const data = await model.updateToken(req.body.google_id,req.body.access_token);
         if (data == null) {
             res.status(200).json({
                 status: 200,
-                message: "No user was found for this google_id",
+                message: "No user/ admin was found for this google_id",
                 action: "Update",
-                data: null
+                data: false
             });
         } else {
             res.status(200).json({

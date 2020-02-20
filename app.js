@@ -8,6 +8,7 @@ const taskApi = require('./routers/taskRouter');
 const subjectApi = require('./routers/subjectRouter');
 const companyApi = require('./routers/companyRouter');
 const userApi = require('./routers/userRouter');
+const intentionsApi = require('./routers/intentionsRouter');
 
 app.use(cors());
 app.use(express.json())
@@ -29,6 +30,7 @@ app.use('/Help4U/task', taskApi);
 app.use('/Help4U/subjects', subjectApi);
 app.use('/Help4U/companies', companyApi);
 app.use('/Help4U/user', userApi);
+app.use('/Help4U/intentions', intentionsApi);
 app.get('*', (req, res) => {
   res.status(404).json({
       status:404,

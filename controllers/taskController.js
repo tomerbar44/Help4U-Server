@@ -31,8 +31,7 @@ async function getTasksUser(req, res) {
 
 async function getTasksCompany(req, res) {
     try {
-        console.log("new body",req.body.google_id,req.body.acsses_token)
-        const data = await model.findTasksCompany(req.params.companyID,req.body.google_id,req.body.acsses_token);
+        const data = await model.findTasksCompany(req.params.companyID,req.body.google_id,req.body.access_token);
         if (data.length == 0) {
             res.status(200).json({
                 status:200,
@@ -89,7 +88,7 @@ async function createNewTask(req, res) {
 
 async function updateStatusTask(req, res) {
     try {
-        const data = await model.updateStatus(req.params.taskID,req.body.google_id,req.body.acsses_token);
+        const data = await model.updateStatus(req.params.taskID,req.body.google_id,req.body.access_token);
         if (data == null) {
             res.status(200).json({
                 status:200,
@@ -154,7 +153,7 @@ async function updateChatTask(req, res) {
 async function deleteTask(req, res) {
     try {
     
-        const data = await model.deleteTaskFromDb(req.params.taskID,req.body.google_id,req.body.acsses_token);
+        const data = await model.deleteTaskFromDb(req.params.taskID,req.body.google_id,req.body.access_token);
         if (data == null) {
             res.status(200).json({
                 status:200,

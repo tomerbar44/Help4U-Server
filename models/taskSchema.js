@@ -41,8 +41,7 @@ const taskSchema = new Schema({
         default:'Active'
     },
     selectedSubject: {
-        type: String,
-        required: true
+        type: String
     },
     chat: [messageSchema]
 });
@@ -63,9 +62,8 @@ taskSchema.statics.insertNewTask = async function (body) {
         selectedSubject: body.selectedSubject,
         chat: body.chat
     });
-    console.log("taskid",taskObj.taskID);
     console.log(body.chat[0].message);
-    nlpModel(body.chat[0].message);
+    const nlp=nlpModel(body.chat[0].message);
     return await taskObj.save();
 }
 
@@ -79,9 +77,9 @@ taskSchema.statics.findTasksUser = function (userID) {
 }
 
 // read tasks by company ID
-taskSchema.statics.findTasksCompany = async function (companyID,google_id, acsses_token) {
+taskSchema.statics.findTasksCompany = async function (companyID,google_id, access_token) {
     try{
-        const data = await userModel.checkToken(google_id, acsses_token);
+        const data = await userModel.checkToken(google_id, access_token);
         if(data==null) return -1;
     }
     catch (err) { throw err;}
@@ -93,9 +91,9 @@ taskSchema.statics.findTasksCompany = async function (companyID,google_id, acsse
 }
 
 // update status by task ID , only if status=Active, change status to Completed and create complete date by date now
-taskSchema.statics.updateStatus = async function (taskID,google_id, acsses_token) {
+taskSchema.statics.updateStatus = async function (taskID,google_id, access_token) {
     try{
-        const data = await userModel.checkToken(google_id, acsses_token);
+        const data = await userModel.checkToken(google_id, access_token);
         if(data==null) return -1;
     }
     catch (err) { throw err;}
@@ -108,9 +106,9 @@ taskSchema.statics.updateChat = async function (req) {
 }
 
 // delete task by task ID , only if status=Completed
-taskSchema.statics.deleteTaskFromDb = async function (taskID,google_id, acsses_token) {
+taskSchema.statics.deleteTaskFromDb = async function (taskID,google_id, access_token) {
     try{
-        const data = await userModel.checkToken(google_id, acsses_token);
+        const data = await userModel.checkToken(google_id, access_token);
         if(data==null) return -1;
     }
     catch (err) { throw err;}

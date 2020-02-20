@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
     google_id: { type: String, required: true, unique: true },               // per user from google sign in
-    acsses_token:{ type: String },
+    access_token:{ type: String },
     isAdmin: { type: Boolean, required: true ,default: false}               // admin or client
 });
 
@@ -15,12 +15,12 @@ userSchema.statics.findUser = function (google_id) {
     });
 }
 
-userSchema.statics.updateToken = async function (google_id, acsses_token) {
-    return await this.findOneAndUpdate({ google_id: google_id ,isAdmin:true}, { $set: { acsses_token: acsses_token} }, { new: true });
+userSchema.statics.updateToken = async function (google_id, access_token) {
+    return await this.findOneAndUpdate({ google_id: google_id ,isAdmin:true}, { $set: { access_token: access_token} }, { new: true });
 }
 
-userSchema.statics.checkToken = function (google_id, acsses_token) {
-    return this.findOne({ google_id: google_id , acsses_token: acsses_token , isAdmin:true }, function (err) {
+userSchema.statics.checkToken = function (google_id, access_token) {
+    return this.findOne({ google_id: google_id , access_token: access_token , isAdmin:true }, function (err) {
         if (err) {
             throw err;
         }
