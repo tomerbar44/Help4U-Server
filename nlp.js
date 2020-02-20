@@ -9,6 +9,7 @@ classifier.addDocument('not work ', 'problems');
 classifier.train();
 
 function findMeaning(title){
+    console.log(title)
      return classifier.classify(title);
 }
 
