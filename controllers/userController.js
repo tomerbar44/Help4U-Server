@@ -49,8 +49,36 @@ async function createClientUser(req, res) {
         })
     }
 }
+async function updateToken(req, res) {
+    try {
+        const data = await model.updateToken(req.body.google_id,req.body.acsses_token);
+        if (data == null) {
+            res.status(200).json({
+                status: 200,
+                message: "No user was found for this google_id",
+                action: "Update",
+                data: null
+            });
+        } else {
+            res.status(200).json({
+                status: 200,
+                message: "success",
+                action: "Update",
+                data: true
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            status: 500,
+            message: err.message,
+            action: "Update",
+            data: null
+        })
+    }
+}
 
 module.exports = {
     checkUser,
-    createClientUser
+    createClientUser,
+    updateToken
 };

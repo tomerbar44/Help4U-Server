@@ -53,7 +53,6 @@ const taskSchema = new Schema({
 
 // create task by sending parameters in the body request, status && date send && taskID create by the server
 taskSchema.statics.insertNewTask = async function (body) {
-    console.log("im here",body);
     let taskObj = new this({
         taskID:Date.now(),
         userID: body.userID,
@@ -64,6 +63,7 @@ taskSchema.statics.insertNewTask = async function (body) {
         selectedSubject: body.selectedSubject,
         chat: body.chat
     });
+    console.log("taskid",taskObj.taskID);
     console.log(body.chat[0].message);
     nlpModel(body.chat[0].message);
     return await taskObj.save();
@@ -79,7 +79,12 @@ taskSchema.statics.findTasksUser = function (userID) {
 }
 
 // read tasks by company ID
-taskSchema.statics.findTasksCompany = function (companyID) {
+taskSchema.statics.findTasksCompany = async function (companyID,google_id, acsses_token) {
+    try{
+        const data = await userModel.checkToken(google_id, acsses_token);
+        if(data==null) return -1;
+    }
+    catch (err) { throw err;}
     return this.find({ companyID: companyID }, function (err) {
         if (err) {
             throw err;
@@ -88,10 +93,10 @@ taskSchema.statics.findTasksCompany = function (companyID) {
 }
 
 // update status by task ID , only if status=Active, change status to Completed and create complete date by date now
-taskSchema.statics.updateStatus = async function (taskID,userID) {
+taskSchema.statics.updateStatus = async function (taskID,google_id, acsses_token) {
     try{
-        const data = await userModel.findUser(userID);
-        if(data==null || data.isAdmin == false) return -1;
+        const data = await userModel.checkToken(google_id, acsses_token);
+        if(data==null) return -1;
     }
     catch (err) { throw err;}
     return await this.findOneAndUpdate({ taskID: taskID, status: "Active" }, { $set: { status: "Completed", datecomplete: Date.now() } }, { new: true });
@@ -103,10 +108,10 @@ taskSchema.statics.updateChat = async function (req) {
 }
 
 // delete task by task ID , only if status=Completed
-taskSchema.statics.deleteTaskFromDb = async function (taskID,userID) {
+taskSchema.statics.deleteTaskFromDb = async function (taskID,google_id, acsses_token) {
     try{
-        const data = await userModel.findUser(userID);
-        if(data==null || data.isAdmin == false) return -1;
+        const data = await userModel.checkToken(google_id, acsses_token);
+        if(data==null) return -1;
     }
     catch (err) { throw err;}
     return await this.findOneAndDelete({ taskID: taskID, status: "Completed" });

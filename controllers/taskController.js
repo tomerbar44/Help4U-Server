@@ -31,7 +31,8 @@ async function getTasksUser(req, res) {
 
 async function getTasksCompany(req, res) {
     try {
-        const data = await model.findTasksCompany(req.params.companyID);
+        console.log("new body",req.body.google_id,req.body.acsses_token)
+        const data = await model.findTasksCompany(req.params.companyID,req.body.google_id,req.body.acsses_token);
         if (data.length == 0) {
             res.status(200).json({
                 status:200,
@@ -39,7 +40,14 @@ async function getTasksCompany(req, res) {
                 action: "Read",
                 data: null
             });
-        } else {
+        } else if (data == -1) {
+            res.status(200).json({
+                status:200,
+                message: "The user does not have permission",
+                action: "Read",
+                data: null
+            });
+        }else {
             res.status(200).json({
                 status:200,
                 message: "success",
@@ -61,9 +69,7 @@ async function getTasksCompany(req, res) {
 
 async function createNewTask(req, res) {
     try {
-        
         const data = await model.insertNewTask(req.body);
-        console.log("task",data);
         res.status(200).json({
             status:200,
             message: "success",
@@ -83,7 +89,7 @@ async function createNewTask(req, res) {
 
 async function updateStatusTask(req, res) {
     try {
-        const data = await model.updateStatus(req.params.taskID,req.body.userID);
+        const data = await model.updateStatus(req.params.taskID,req.body.google_id,req.body.acsses_token);
         if (data == null) {
             res.status(200).json({
                 status:200,
@@ -95,7 +101,7 @@ async function updateStatusTask(req, res) {
             res.status(200).json({
                 status:200,
                 message: "The user does not have permission to update status",
-                action: "Delete",
+                action: "Update",
                 data: null
             });
         }else {
@@ -148,7 +154,7 @@ async function updateChatTask(req, res) {
 async function deleteTask(req, res) {
     try {
     
-        const data = await model.deleteTaskFromDb(req.params.taskID,req.body.userID);
+        const data = await model.deleteTaskFromDb(req.params.taskID,req.body.google_id,req.body.acsses_token);
         if (data == null) {
             res.status(200).json({
                 status:200,

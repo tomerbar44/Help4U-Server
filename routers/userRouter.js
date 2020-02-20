@@ -10,6 +10,10 @@ router.post('/create', (req, res) => {
     controller.createClientUser(req, res);
 });
 
+router.put('/update', (req, res) => {
+    controller.updateToken(req, res);
+});
+
 // default route
 router.all('*', (req, res) => {
     res.status(404).json({
