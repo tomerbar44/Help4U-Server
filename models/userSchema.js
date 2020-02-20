@@ -3,6 +3,7 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema({
     google_id: { type: String, required: true, unique: true },               // per user from google sign in
     access_token:{ type: String },
+    company:{ type: String },
     isAdmin: { type: Boolean, required: true ,default: false}               // admin or client
 });
 

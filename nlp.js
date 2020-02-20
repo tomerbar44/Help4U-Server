@@ -5,7 +5,7 @@ classifier.addDocument('my tv not work', 'TV problems');
 classifier.addDocument('i cant see nothing in my tv', 'TV problems');
 classifier.addDocument('my wifi is disconnect', 'WIFI problems');
 classifier.addDocument('my wifi is not work again', 'WIFI problems');
-classifier.addDocument('not work ', 'problems');
+
 classifier.train();
 
 function findMeaning(title){

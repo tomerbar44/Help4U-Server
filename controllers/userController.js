@@ -16,7 +16,7 @@ async function checkUser(req, res) {
                 status: 200,
                 message: "success",
                 action: "Read",
-                data: data.isAdmin
+                data: {admin:data.isAdmin,company:data.company}
             })
         }
     } catch (err) {
