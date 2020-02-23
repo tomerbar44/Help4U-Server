@@ -19,10 +19,6 @@ router.put('/update/:taskID', (req, res) => {
     controller.updateStatusTask(req, res);
 });
 
-// router.put('/updateChat/:taskID', (req, res) => {
-//     controller.updateChatTask(req, res);
-// });
-
 router.delete('/:taskID', (req, res) => {
     controller.deleteTask(req, res);
 });

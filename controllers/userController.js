@@ -1,6 +1,6 @@
 const model = require('../models/userSchema');
 
-// check if user exists in our system by google_id, if yes send in the data the authorization (admin or client) of the user
+// check if user exists in our system by google_id, if yes send in the data the authorization (admin or client) of the user and his company if he admin
 async function checkUser(req, res) {
     try {
         const data = await model.findUser(req.body.google_id);
@@ -49,6 +49,7 @@ async function createClientUser(req, res) {
         })
     }
 }
+// update access token to admin user, to allow admin actions, happen in admin login
 async function updateToken(req, res) {
     try {
         const data = await model.updateToken(req.body.google_id,req.body.access_token);

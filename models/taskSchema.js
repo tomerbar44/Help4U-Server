@@ -6,7 +6,7 @@ const messageSchema = new Schema({
 });
 
 const userModel = require('./userSchema');
-const nlpAlgorithm = require('../nlp');
+const nlpAlgorithm = require('../nlp/nlp');
 
 const taskSchema = new Schema({
     taskID: {
@@ -50,7 +50,8 @@ const taskSchema = new Schema({
  * Schema logic
  */
 
-// create task by sending parameters in the body request, status && date send && taskID create by the server
+// create task by sending parameters in the body request, status && date send && taskID create by the server , 
+// selectedSubject create by Naive Bayes classifier algorithm on the request title
 taskSchema.statics.insertNewTask = async function (body) {
     const classifySubject=nlpAlgorithm.findMeaning(body.title);
     let taskObj = new this({
@@ -63,7 +64,6 @@ taskSchema.statics.insertNewTask = async function (body) {
         selectedSubject: classifySubject,
         chat: body.chat
     });
-    console.log(body.userID);
     return await taskObj.save();
 }
 
@@ -76,7 +76,7 @@ taskSchema.statics.findTasksUser = function (userID) {
     });
 }
 
-// read tasks by company ID
+// read tasks by company ID , before check if the user is admin and have updated access token in our db
 taskSchema.statics.findTasksCompany = async function (companyID,google_id, access_token) {
     try{
         const data = await userModel.checkToken(google_id, access_token);
@@ -90,7 +90,8 @@ taskSchema.statics.findTasksCompany = async function (companyID,google_id, acces
     });
 }
 
-// update status by task ID , only if status=Active, change status to Completed and create complete date by date now
+// update status by task ID , only if status=Active, change status to Completed and create complete date by date now , 
+// before check if the user is admin and have update access token in our db
 taskSchema.statics.updateStatus = async function (taskID,google_id, access_token) {
     try{
         const data = await userModel.checkToken(google_id, access_token);
@@ -106,6 +107,7 @@ taskSchema.statics.updateChat = async function (req) {
 }
 
 // delete task by task ID , only if status=Completed
+// before check if the user is admin and have update access token in our db
 taskSchema.statics.deleteTaskFromDb = async function (taskID,google_id, access_token) {
     try{
         const data = await userModel.checkToken(google_id, access_token);

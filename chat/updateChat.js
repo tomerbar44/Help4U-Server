@@ -1,4 +1,4 @@
-const taskModel = require('./taskSchema');
+const taskModel = require('../models/taskSchema');
 
 
 /**

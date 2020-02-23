@@ -17,7 +17,7 @@ const app = require('./app');
 const http = require('http').createServer(app);
 const dbCon = require('./db_connection')
 const port = process.env.PORT || 3000;
-require('./chat')(http);
+require('./chat/chat')(http);
 
 // connect to server and then to db
 http.listen(port, () => {

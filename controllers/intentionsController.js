@@ -1,8 +1,8 @@
-const nlpAlgorithm = require('../nlp');
+const nlpAlgorithm = require('../nlp/nlp');
 
-function addIntentions(req, res) {
+async function addIntentions(req, res) {
     try {
-        const data = nlpAlgorithm.trainAlgo(req.body.text,req.body.subject);
+        const data = await nlpAlgorithm.trainAlgo(req.body.text,req.body.subject,req.body.google_id,req.body.access_token);
         if (data == true) {
             res.status(200).json({
                 status:200,
@@ -13,7 +13,7 @@ function addIntentions(req, res) {
         } else {
             res.status(200).json({
                 status:200,
-                message: "success",
+                message: "The user does not have permission to add intentions / The fields are missing",
                 action: "Create",
                 data: data 
             })
