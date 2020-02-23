@@ -31,7 +31,7 @@ async function getTasksUser(req, res) {
 
 async function getTasksCompany(req, res) {
     try {
-        const data = await model.findTasksCompany(req.params.companyID,req.body.google_id,req.body.access_token);
+        const data = await model.findTasksCompany(req.params.companyID,req.headers.google_id ,req.headers.access_token);
         if (data.length == 0) {
             res.status(200).json({
                 status:200,
@@ -40,8 +40,8 @@ async function getTasksCompany(req, res) {
                 data: null
             });
         } else if (data == -1) {
-            res.status(200).json({
-                status:200,
+            res.status(403).json({
+                status:403,
                 message: "The user does not have permission",
                 action: "Read",
                 data: null
@@ -68,6 +68,7 @@ async function getTasksCompany(req, res) {
 
 async function createNewTask(req, res) {
     try {
+        
         const data = await model.insertNewTask(req.body);
         res.status(200).json({
             status:200,
@@ -97,8 +98,8 @@ async function updateStatusTask(req, res) {
                 data: null
             });
         }else if (data == -1) {
-            res.status(200).json({
-                status:200,
+            res.status(403).json({
+                status:403,
                 message: "The user does not have permission to update status",
                 action: "Update",
                 data: null
@@ -162,8 +163,8 @@ async function deleteTask(req, res) {
                 data: null
             });
         }else if (data == -1) {
-            res.status(200).json({
-                status:200,
+            res.status(403).json({
+                status:403,
                 message: "The user does not have permission to delete",
                 action: "Delete",
                 data: null

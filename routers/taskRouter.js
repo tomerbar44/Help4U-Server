@@ -7,7 +7,7 @@ router.get('/user/:userID', (req, res) => {
     controller.getTasksUser(req, res);
 });
 
-router.post('/company/:companyID', (req, res) => {
+router.get('/company/:companyID', (req, res) => {
     controller.getTasksCompany(req, res);
 });
 

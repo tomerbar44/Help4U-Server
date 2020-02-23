@@ -76,7 +76,7 @@ taskSchema.statics.findTasksUser = function (userID) {
     });
 }
 
-// read tasks by company ID , before check if the user is admin and have updated access token in our db
+// read tasks by company ID , before check if the user is admin and have updated access token in our db (send in the header request)
 taskSchema.statics.findTasksCompany = async function (companyID,google_id, access_token) {
     try{
         const data = await userModel.checkToken(google_id, access_token);
@@ -91,7 +91,7 @@ taskSchema.statics.findTasksCompany = async function (companyID,google_id, acces
 }
 
 // update status by task ID , only if status=Active, change status to Completed and create complete date by date now , 
-// before check if the user is admin and have update access token in our db
+// before check if the user is admin and have update access token in our db 
 taskSchema.statics.updateStatus = async function (taskID,google_id, access_token) {
     try{
         const data = await userModel.checkToken(google_id, access_token);

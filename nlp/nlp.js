@@ -2,7 +2,7 @@ var natural = require('natural');
 var classifier = new natural.BayesClassifier();
 const userModel = require('../models/userSchema');
 
-// train the algorithem by sentences
+// train the algorithem by sentences when the server create
 classifier.addDocument('my tv not work', 'TV problems');
 classifier.addDocument('i cant see nothing in my tv', 'TV problems');
 classifier.addDocument('my wifi was disconnect', 'WIFI problems');
