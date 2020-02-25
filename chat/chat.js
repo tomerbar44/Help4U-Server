@@ -4,29 +4,16 @@ module.exports = function (http) {
 
     // chat logic
     io.on('connection', function (socket) {
-        socket.on('disconnect', function () {
-        });
-
-        /**
-         * added currTaskID,currTaskChat
-         */
+        
+        // every message arrived we updated the db and sending the new message to all clients socket 
         socket.on('chat message', function (msg, from, currTaskID, currTaskChat) {
-            updateChatFromSocket(currTaskID, [...currTaskChat, { from: from, message: msg }]);
-            io.emit('chat message', msg, from);
+            try{
+                updateChatFromSocket(currTaskID, [...currTaskChat, { from: from, message: msg }]);
+                io.emit('chat message', msg, from);
+            }catch(e){
+                io.emit('DB not updated chat', msg,from, e.message);
+            }
         });
-        // we update the socket with task info
-        socket.on("update task", function (task) {
-            socket.taskID = task.taskID;
-        })
-        // every message sent, we update the chat property of the socket, when user disconnect we will post the new chat 
-        socket.on('update chat', function (chat) {
-            console.log('"updated chat" chat\n', chat)
-            socket.chat = chat;
-
-
-        })
     });
-
     return io;
-
 }
