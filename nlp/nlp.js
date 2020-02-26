@@ -2,16 +2,23 @@ var natural = require('natural');
 var classifier = new natural.BayesClassifier();
 const userModel = require('../models/userSchema');
 
-// train the algorithem by sentences when the server create
-classifier.addDocument('my tv not work', 'TV problems');
-classifier.addDocument('i cant see nothing in my tv', 'TV problems');
-classifier.addDocument('my wifi was disconnect', 'WIFI problems');
-classifier.addDocument('my wifi is not work again', 'WIFI problems');
-classifier.addDocument('I dont have a signal on the Internet at home.','WIFI problems');
-classifier.addDocument('The internet keeps disconnecting.', 'WIFI problems');
-classifier.addDocument('Your service sucks.', 'Want to disconnect');
-classifier.addDocument('I want to disconnect', 'Want to disconnect');
-classifier.addDocument('Youre not answering and the service is no good.', 'Want to disconnect');
+// train the algorithem by sentences when the server start working
+classifier.addDocument('my tv not work', 'TV');
+classifier.addDocument('i cant see nothing in my tv', 'TV');
+classifier.addDocument('my wifi was disconnect', 'INTERNET');
+classifier.addDocument('my wifi is not work again', 'INTERNET');
+classifier.addDocument('I dont have a signal on the Internet at home.','INTERNET');
+classifier.addDocument('The internet keeps disconnecting.', 'INTERNET');
+classifier.addDocument('Your service sucks.', 'LEAVE');
+classifier.addDocument('I want to disconnect', 'LEAVE');
+classifier.addDocument('I want to leave', 'LEAVE');
+classifier.addDocument('Your service is bad!', 'LEAVE');
+classifier.addDocument('Youre not answering and the service is no good.', 'LEAVE');
+classifier.addDocument('Im paying too much, I want a discount.', 'FINANCIAL');
+classifier.addDocument('The payment is too expensive.', 'FINANCIAL');
+classifier.addDocument('I want an invoice.', 'FINANCIAL');
+classifier.addDocument('The monthly payment should be cheaper', 'FINANCIAL');
+
 classifier.train();
 
 function findMeaning(title){
