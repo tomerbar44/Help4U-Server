@@ -5,19 +5,20 @@ const userModel = require('../models/userSchema');
 // train the algorithem by sentences when the server start working
 classifier.addDocument('my tv not work', 'TV');
 classifier.addDocument('i cant see nothing in my tv', 'TV');
-classifier.addDocument('my wifi was disconnect', 'INTERNET');
-classifier.addDocument('my wifi is not work again', 'INTERNET');
-classifier.addDocument('I dont have a signal on the Internet at home.','INTERNET');
-classifier.addDocument('The internet keeps disconnecting.', 'INTERNET');
-classifier.addDocument('Your service sucks.', 'LEAVE');
-classifier.addDocument('I want to disconnect', 'LEAVE');
-classifier.addDocument('I want to leave', 'LEAVE');
-classifier.addDocument('Your service is bad!', 'LEAVE');
-classifier.addDocument('Youre not answering and the service is no good.', 'LEAVE');
-classifier.addDocument('Im paying too much, I want a discount.', 'FINANCIAL');
-classifier.addDocument('The payment is too expensive.', 'FINANCIAL');
-classifier.addDocument('I want an invoice.', 'FINANCIAL');
-classifier.addDocument('The monthly payment should be cheaper', 'FINANCIAL');
+classifier.addDocument('Tv not working now!', 'TV');
+classifier.addDocument('my wifi was disconnect', 'Internet');
+classifier.addDocument('my wifi is not work again', 'Internet');
+classifier.addDocument('I dont have a signal on the Internet at home.','Internet');
+classifier.addDocument('The internet keeps disconnecting.', 'Internet');
+classifier.addDocument('Your service sucks.', 'Leave');
+classifier.addDocument('I want to disconnect', 'Leave');
+classifier.addDocument('I want to leave', 'Leave');
+classifier.addDocument('Your service is bad!', 'Leave');
+classifier.addDocument('Youre not answering and the service is no good.', 'Leave');
+classifier.addDocument('Im paying too much, I want a discount.', 'Financial');
+classifier.addDocument('The payment is too expensive.', 'Financial');
+classifier.addDocument('I want an invoice.', 'Financial');
+classifier.addDocument('The monthly payment should be cheaper', 'Financial');
 
 classifier.train();
 
